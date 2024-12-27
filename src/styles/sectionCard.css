@@ -5,3 +5,9 @@
 .section-card:hover {
     border: solid 1px #2135473b;
   }
+
+@media print {
+    .section-card {
+        border: none;
+    }
+}
