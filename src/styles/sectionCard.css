@@ -1,0 +1,7 @@
+.section-card > p {
+    margin: 0;
+}
+
+.section-card:hover {
+    border: solid 1px #2135473b;
+  }
