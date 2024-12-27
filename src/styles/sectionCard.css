@@ -2,8 +2,16 @@
     margin: 0;
 }
 
+.section-card > button {
+    display: none;
+}
+
 .section-card:hover {
     border: solid 1px #2135473b;
+  }
+
+.section-card:hover > button {
+    display: inline;
   }
 
 @media print {
