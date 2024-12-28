@@ -1,0 +1,6 @@
+.general-input {
+    display: flex;
+    flex-direction: column;
+    background-color: '#dce3eb';
+    padding-top: 1em;
+} 

@@ -1,8 +1,11 @@
+import { useState } from "react";
 import SectionCard from "./SectionCard";
 
 export default function Education () {
+    const [editing, setEditing] = useState(false)
+
     return (
-        <SectionCard>
+        <SectionCard editing={editing}>
             <h2>Education</h2>
             <ul>
                 <li>M.S. Civil Engineering - Geotechnical, University of the Philippines (2016)</li>

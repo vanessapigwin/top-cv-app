@@ -1,8 +1,11 @@
+import { useState } from "react";
 import SectionCard from "./SectionCard";
 
 export default function WorkExperience() {
+    const [editing, setEditing] = useState(false);
+
     return (
-        <SectionCard>
+        <SectionCard editing={editing}>
             <h2>Professional Experience</h2>
             <h4>Software Engineer, Arch Global Services Incorporated (November 2023 - Present)</h4>
             <ul>
@@ -13,7 +16,6 @@ export default function WorkExperience() {
                 <li>App support and communication for production issues in coordination with 
                     Infrastructure, Underwriting IT and Policy Writing IT Teams
                 </li>
-                <li>Tools used: python (Flask, pytest, pandas), Azure Functions, MSSQL, GitHub Workflows</li>
             </ul>
             <h4>Statistical Data Scientist, GfK, (May 2022 - May 2023)</h4>
             <ul>
