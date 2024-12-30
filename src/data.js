@@ -7,6 +7,7 @@ export const general = {
 
 export const experiences = [
   {
+    key: 2,
     title: "Software Engineer",
     employer: "Arch Global Services Incorporated",
     start: "November 2023",
@@ -18,6 +19,7 @@ export const experiences = [
     ],
   },
   {
+    key: 1,
     title: "Statistical Data Scientist",
     employer: "GfK",
     start: "May 2022",
@@ -29,6 +31,7 @@ export const experiences = [
     ],
   },
   {
+    key: 0,
     title: "Geotechnical and Structural Engineer",
     employer: "various companies",
     start: "2009",
