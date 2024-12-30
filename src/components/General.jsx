@@ -1,5 +1,5 @@
 import { useState } from "react";
-import general from "../data";
+import { general } from "../data";
 import "../styles/General.css";
 import SectionCard from "./SectionCard";
 

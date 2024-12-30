@@ -9,15 +9,11 @@ export default function Skills() {
       <h2>Skills</h2>
       <ul>
         <li>
-          <b>Backend Development</b> - Python (Flask, pytest, pandas), Azure
-          Functions, MSSQL
+          Backend Development- Python (Flask, pytest, pandas), Azure Functions,
+          MSSQL
         </li>
-        <li>
-          <b>Automation and Scraping</b> - html, css, js, Selenium
-        </li>
-        <li>
-          <b>CI / CD</b> - git, GitHub Workflows, Linux, Docker
-        </li>
+        <li>Automation and Scraping - html, css, js, Selenium</li>
+        <li>CI / CD - git, GitHub Workflows, Linux, Docker</li>
       </ul>
     </SectionCard>
   );
