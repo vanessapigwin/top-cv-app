@@ -5,18 +5,27 @@ import SectionCard from "./SectionCard";
 
 export default function GeneralSection() {
   const divStyle = {
-    "background-color": "#dce3eb",
+    backgroundColor: "#dce3eb",
     display: "flex",
-    "flex-direction": "column",
-    "align-items": "center",
-    "padding-bottom": "1em",
+    flexDirection: "column",
+    alignItems: "center",
+    paddingBottom: "1em",
   };
 
   const [generalData, setGeneralData] = useState(general);
   const [editing, setEditing] = useState(false);
 
-  function editContent() {
+  function handleContent(e) {
+    e.preventDefault();
+    const form = e.target.form;
+    if (form) updateData(form);
     setEditing(!editing);
+  }
+
+  function updateData (form) {
+    const formData = new FormData(form);
+    const updatedData = Object.fromEntries(formData);
+    setGeneralData(updatedData);
   }
 
   function Content() {
@@ -30,17 +39,17 @@ export default function GeneralSection() {
         </>
       );
     return (
-      <div className="general-input">
-        <input defaultValue={general.name}></input>
-        <input defaultValue={general.email}></input>
-        <input defaultValue={general.contactNo}></input>
-        <input defaultValue={general.github}></input>
-      </div>
+      <form id='general' className="general-input">
+        <input defaultValue={general.name} name="name"></input>
+        <input defaultValue={general.email} name="email"></input>
+        <input defaultValue={general.contactNo} name="contactNo"></input>
+        <input defaultValue={general.github} name="github"></input>
+      </form>
     );
   }
 
   return (
-    <SectionCard editing={editing} style={divStyle} onclick={editContent}>
+    <SectionCard editing={editing} style={divStyle} form='general' onClick={handleContent}>
       <Content />
     </SectionCard>
   );

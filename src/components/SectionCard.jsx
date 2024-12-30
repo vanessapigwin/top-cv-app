@@ -1,14 +1,21 @@
 import "../styles/sectionCard.css";
 
 export default function SectionCard({
-  style = null,
   editing,
-  onclick,
+  style = null,
+  form = null,
+  onClick = null,
   children,
 }) {
   return (
     <div className="section-card" style={style}>
-      <button onClick={onclick}>{editing ? "Save" : "Edit"}</button>
+      <button
+        type="submit" 
+        form={form}
+        onClick = {onClick}
+      >
+        {editing ? "Save" : "Edit"}
+      </button>
       {children}
     </div>
   );
