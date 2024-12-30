@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { experiences } from "../data";
+import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
 
-function ExpList({ exp }) {
+function Experience({ exp, editing }) {
   return (
     <>
-      <div className='expEntry'>
+      <div className="title-button-tray">
         <h4>
           {exp.title}, {exp.employer}, ({exp.start} - {exp.end})
         </h4>
+        {editing ? (
+          <div className="button-tray">
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+        ) : null}
       </div>
       <ul>
         {exp.accomplishments.map((a) => (
@@ -27,11 +34,30 @@ export default function WorkExperience() {
     setEditing(!editing);
   }
 
+  function addExperience() {}
+
+  function delExperience() {}
+
+  function editExperience() {}
+
   return (
     <SectionCard editing={editing} onClick={handleChange}>
-      <h2>Professional Experience</h2>
+      <div className="title-button-tray">
+        <h2>Professional Experience</h2>
+        {editing ? (
+          <div className="button-tray">
+            <button>Add</button>
+          </div>
+        ) : null}
+      </div>
       {expList.map((exp) => (
-        <ExpList exp={exp} key={exp.key} />
+        <Experience
+          exp={exp}
+          key={exp.key}
+          editing={editing}
+          handleEdit={editExperience}
+          handleDelete={delExperience}
+        />
       ))}
     </SectionCard>
   );

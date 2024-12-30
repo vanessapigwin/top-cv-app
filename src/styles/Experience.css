@@ -1,0 +1,12 @@
+.title-button-tray {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-button-tray > .button-tray {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
