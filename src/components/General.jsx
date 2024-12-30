@@ -22,7 +22,7 @@ export default function GeneralSection() {
     setEditing(!editing);
   }
 
-  function updateData (form) {
+  function updateData(form) {
     const formData = new FormData(form);
     const updatedData = Object.fromEntries(formData);
     setGeneralData(updatedData);
@@ -39,7 +39,7 @@ export default function GeneralSection() {
         </>
       );
     return (
-      <form id='general' className="general-input">
+      <form id="general" className="general-input">
         <input defaultValue={general.name} name="name"></input>
         <input defaultValue={general.email} name="email"></input>
         <input defaultValue={general.contactNo} name="contactNo"></input>
@@ -49,7 +49,12 @@ export default function GeneralSection() {
   }
 
   return (
-    <SectionCard editing={editing} style={divStyle} form='general' onClick={handleContent}>
+    <SectionCard
+      editing={editing}
+      style={divStyle}
+      form="general"
+      onClick={handleContent}
+    >
       <Content />
     </SectionCard>
   );
