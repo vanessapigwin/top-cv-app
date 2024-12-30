@@ -1,24 +1,24 @@
 .section-card > p {
-    margin: 0;
+  margin: 0;
 }
 
 .section-card > button {
-    display: none;
+  display: none;
 }
 
 .section-card:hover {
-    border: solid 1px #2135473b;
-  }
+  border: solid 1px #2135473b;
+}
 
 .section-card:hover > button {
-    display: inline;
-  }
+  display: inline;
+}
 
 @media print {
-    button {
-        display: none;
-    }
-    .section-card {
-        border: none;
-    }
+  button {
+    display: none;
+  }
+  .section-card {
+    border: none;
+  }
 }
