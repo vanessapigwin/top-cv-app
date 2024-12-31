@@ -2,6 +2,7 @@ import { useState } from "react";
 import { experiences } from "../data";
 import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
+import ButtonTray from "./ButtonTray";
 
 function Experience({ exp, editing }) {
   return (
@@ -10,12 +11,12 @@ function Experience({ exp, editing }) {
         <h4>
           {exp.title}, {exp.employer}, ({exp.start} - {exp.end})
         </h4>
-        {editing ? (
-          <div className="button-tray">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
-        ) : null}
+        
+        <ButtonTray editing={editing}>
+          <button>Edit</button>
+          <button>Delete</button>
+        </ButtonTray>
+        
       </div>
       <ul>
         {exp.accomplishments.map((a) => (
@@ -44,11 +45,11 @@ export default function WorkExperience() {
     <SectionCard editing={editing} onClick={handleChange}>
       <div className="title-button-tray">
         <h2>Professional Experience</h2>
-        {editing ? (
-          <div className="button-tray">
-            <button>Add</button>
-          </div>
-        ) : null}
+
+        <ButtonTray editing={editing}>
+          {<button>Add</button>}
+        </ButtonTray>
+
       </div>
       {expList.map((exp) => (
         <Experience
