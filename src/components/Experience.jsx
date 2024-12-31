@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { experiences } from "../data";
 import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
@@ -12,7 +13,7 @@ function Experience({ exp, editing }) {
           {exp.title}, {exp.employer}, ({exp.start} - {exp.end})
         </h4>
 
-        <ButtonTray editing={editing}>
+        <ButtonTray visible={editing}>
           <button>Edit</button>
           <button>Delete</button>
         </ButtonTray>
@@ -23,6 +24,29 @@ function Experience({ exp, editing }) {
         ))}
       </ul>
     </>
+  );
+}
+
+function ExpForm({ title, handleSubmit, handleFormCancel }) {
+  return (
+    <div className='form-modal' >
+      <form className='modal-content' onSubmit={handleSubmit}>
+        <h3>{title}</h3>
+        <input placeholder="Job Title"></input>
+        <input placeholder="Employer"></input>
+        <input placeholder="Start Date"></input>
+        <input placeholder="End Date"></input>
+        <input placeholder="Accomplishment 1"></input>
+        <input placeholder="Accomplishment 2"></input>
+        <input placeholder="Accomplishment 3"></input>
+        <ButtonTray>
+          <button type="submit">Add</button>
+          <button type="button" onClick={handleFormCancel}>
+            Cancel
+          </button>
+        </ButtonTray>
+    </form>
+    </div>
   );
 }
 
@@ -62,20 +86,21 @@ export default function WorkExperience() {
       <div className="title-button-tray">
         <h2>Professional Experience</h2>
 
-        <ButtonTray editing={editing}>
+        <ButtonTray visible={editing}>
           <button onClick={showForm}>Add</button>
         </ButtonTray>
       </div>
 
-      {adding && (
-        <form onSubmit={handleSubmit}>
-          <input placeholder="Job Title"></input>
-          <button type="submit">Add</button>
-          <button type="button" onClick={handleFormCancel}>
-            Cancel
-          </button>
-        </form>
-      )}
+      {
+        adding && createPortal(
+          <ExpForm
+            title="Add Experience"
+            handleSubmit={handleSubmit}
+            handleFormCancel={handleFormCancel}
+          />,
+          document.body
+        )
+      }
 
       {expList.map((exp) => (
         <Experience
