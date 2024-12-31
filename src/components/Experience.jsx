@@ -11,12 +11,11 @@ function Experience({ exp, editing }) {
         <h4>
           {exp.title}, {exp.employer}, ({exp.start} - {exp.end})
         </h4>
-        
+
         <ButtonTray editing={editing}>
           <button>Edit</button>
           <button>Delete</button>
         </ButtonTray>
-        
       </div>
       <ul>
         {exp.accomplishments.map((a) => (
@@ -29,10 +28,27 @@ function Experience({ exp, editing }) {
 
 export default function WorkExperience() {
   const [editing, setEditing] = useState(false);
+  const [adding, setAdding] = useState(false);
   const [expList, setExpList] = useState(experiences);
 
-  function handleChange(e) {
+  function handleChange() {
     setEditing(!editing);
+    setAdding(false);
+  }
+
+  function showForm(e) {
+    setAdding(true);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setAdding(false);
+    setEditing(false);
+  }
+
+  function handleFormCancel() {
+    setAdding(false);
+    setEditing(true);
   }
 
   function addExperience() {}
@@ -47,10 +63,20 @@ export default function WorkExperience() {
         <h2>Professional Experience</h2>
 
         <ButtonTray editing={editing}>
-          {<button>Add</button>}
+          <button onClick={showForm}>Add</button>
         </ButtonTray>
-
       </div>
+
+      {adding && (
+        <form onSubmit={handleSubmit}>
+          <input placeholder="Job Title"></input>
+          <button type="submit">Add</button>
+          <button type="button" onClick={handleFormCancel}>
+            Cancel
+          </button>
+        </form>
+      )}
+
       {expList.map((exp) => (
         <Experience
           exp={exp}

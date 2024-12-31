@@ -5,13 +5,16 @@ export default function SectionCard({
   style = null,
   form = null,
   onClick = null,
+  showButton = true,
   children,
 }) {
   return (
     <div className="section-card" style={style}>
-      <button type="submit" form={form} onClick={onClick}>
-        {editing ? "Save" : "Edit"}
-      </button>
+      {showButton && (
+        <button type="submit" form={form} onClick={onClick}>
+          {editing ? "Save" : "Edit"}
+        </button>
+      )}
       {children}
     </div>
   );
