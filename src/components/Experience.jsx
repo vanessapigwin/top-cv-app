@@ -29,8 +29,8 @@ function Experience({ exp, editing }) {
 
 function ExpForm({ title, handleSubmit, handleFormCancel }) {
   return (
-    <div className='form-modal' >
-      <form className='modal-content' onSubmit={handleSubmit}>
+    <div className="form-modal">
+      <form className="modal-content" onSubmit={handleSubmit}>
         <h3>{title}</h3>
         <input placeholder="Job Title"></input>
         <input placeholder="Employer"></input>
@@ -45,7 +45,7 @@ function ExpForm({ title, handleSubmit, handleFormCancel }) {
             Cancel
           </button>
         </ButtonTray>
-    </form>
+      </form>
     </div>
   );
 }
@@ -91,16 +91,15 @@ export default function WorkExperience() {
         </ButtonTray>
       </div>
 
-      {
-        adding && createPortal(
+      {adding &&
+        createPortal(
           <ExpForm
             title="Add Experience"
             handleSubmit={handleSubmit}
             handleFormCancel={handleFormCancel}
           />,
-          document.body
-        )
-      }
+          document.body,
+        )}
 
       {expList.map((exp) => (
         <Experience
