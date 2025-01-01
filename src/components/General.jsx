@@ -38,10 +38,26 @@ export default function GeneralSection() {
       );
     return (
       <form id="general" className="general-input">
-        <input name="name" placeholder='Name' defaultValue={generalData.name}></input>
-        <input name="email" placeholder='E-mail' defaultValue={generalData.email}></input>
-        <input name="contactNo" placeholder='Contact Number' defaultValue={generalData.contactNo}></input>
-        <input name="github" placeholder='Website / GitHub' defaultValue={generalData.github}></input>
+        <input
+          name="name"
+          placeholder="Name"
+          defaultValue={generalData.name}
+        ></input>
+        <input
+          name="email"
+          placeholder="E-mail"
+          defaultValue={generalData.email}
+        ></input>
+        <input
+          name="contactNo"
+          placeholder="Contact Number"
+          defaultValue={generalData.contactNo}
+        ></input>
+        <input
+          name="github"
+          placeholder="Website / GitHub"
+          defaultValue={generalData.github}
+        ></input>
       </form>
     );
   }

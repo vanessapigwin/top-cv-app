@@ -6,7 +6,6 @@ import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
 import ButtonTray from "./ButtonTray";
 
-
 function Experience({ exp, editing, handleEdit }) {
   function callEditForm(e) {
     handleEdit(e);
