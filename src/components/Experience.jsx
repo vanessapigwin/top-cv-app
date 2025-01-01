@@ -6,7 +6,6 @@ import SectionCard from "./SectionCard";
 import ButtonTray from "./ButtonTray";
 
 function Experience({ exp, editing, handleEdit }) {
-
   function callEditForm(e) {
     handleEdit(e);
   }
@@ -24,28 +23,49 @@ function Experience({ exp, editing, handleEdit }) {
         </ButtonTray>
       </div>
       <ul>
-        {exp.accomplishments.map((a) => (
-          <li key={a + crypto.randomUUID()}>{a}</li>
-        ))}
+        {exp.accomplishments.map(
+          (a) => a && <li key={a + crypto.randomUUID()}>{a}</li>,
+        )}
       </ul>
     </>
   );
 }
 
-function ExpForm({ title, handleSubmit, handleFormCancel }) {
+function ExpForm({ title, exp = null, handleFormSubmit, handleFormCancel }) {
   return (
     <div className="form-modal">
-      <form className="modal-content" onSubmit={handleSubmit}>
+      <form className="modal-content" onSubmit={handleFormSubmit}>
         <h3>{title}</h3>
-        <input placeholder="Job Title"></input>
-        <input placeholder="Employer"></input>
-        <input placeholder="Start Date"></input>
-        <input placeholder="End Date"></input>
-        <input placeholder="Accomplishment 1"></input>
-        <input placeholder="Accomplishment 2"></input>
-        <input placeholder="Accomplishment 3"></input>
+        <input
+          placeholder="Job Title"
+          defaultValue={exp ? exp.title : null}
+        ></input>
+        <input
+          placeholder="Employer"
+          defaultValue={exp ? exp.employer : null}
+        ></input>
+        <input
+          placeholder="Start Date"
+          defaultValue={exp ? exp.start : null}
+        ></input>
+        <input
+          placeholder="End Date"
+          defaultValue={exp ? exp.end : null}
+        ></input>
+        <input
+          placeholder="Accomplishment 1"
+          defaultValue={exp ? exp.accomplishments[0] : null}
+        ></input>
+        <input
+          placeholder="Accomplishment 2"
+          defaultValue={exp ? exp.accomplishments[1] : null}
+        ></input>
+        <input
+          placeholder="Accomplishment 3"
+          defaultValue={exp ? exp.accomplishments[2] : null}
+        ></input>
         <ButtonTray>
-          <button type="submit">Save</button>
+          <button type="submit" onClick={handleFormSubmit}>Save</button>
           <button type="button" onClick={handleFormCancel}>
             Cancel
           </button>
@@ -58,7 +78,7 @@ function ExpForm({ title, handleSubmit, handleFormCancel }) {
 export default function WorkExperience() {
   const [editing, setEditing] = useState(false);
   const [adding, setAdding] = useState(false);
-  const [editIndex, setEditIndex] =useState(null)
+  const [editIndex, setEditIndex] = useState(null);
   const [expList, setExpList] = useState(experiences);
 
   function handleChange() {
@@ -70,7 +90,7 @@ export default function WorkExperience() {
     setAdding(true);
   }
 
-  function handleSubmit(e) {
+  function handleFormSubmit(e) {
     e.preventDefault();
     setAdding(false);
     setEditing(false);
@@ -80,16 +100,16 @@ export default function WorkExperience() {
   function handleFormCancel() {
     setAdding(false);
     setEditing(true);
-    setEditIndex(null)
+    setEditIndex(null);
   }
 
   function addExperience() {}
 
   function delExperience() {}
 
-  function editExperience(e, key) {
-    setEditIndex(key)
-  }
+  function editExperience() {}
+
+  const entryFocused = expList.find((exp) => exp.key === editIndex);
 
   return (
     <SectionCard editing={editing} onClick={handleChange}>
@@ -105,31 +125,29 @@ export default function WorkExperience() {
         createPortal(
           <ExpForm
             title="Add Experience"
-            handleSubmit={handleSubmit}
+            handleFormSubmit={handleFormSubmit}
             handleFormCancel={handleFormCancel}
           />,
           document.body,
-        )
-      }
+        )}
 
-      {
-        editIndex && 
+      {editIndex !== null &&
         createPortal(
           <ExpForm
             title="Edit Experience"
-            handleSubmit={handleSubmit}
+            exp={entryFocused}
+            handleFormSubmit={handleFormSubmit}
             handleFormCancel={handleFormCancel}
           />,
           document.body,
-        )
-      }      
+        )}
 
       {expList.map((exp) => (
         <Experience
           exp={exp}
           key={exp.key}
           editing={editing}
-          handleEdit={(e) => editExperience(e, exp.key)}
+          handleEdit={() => setEditIndex(exp.key)}
           handleDelete={delExperience}
         />
       ))}
