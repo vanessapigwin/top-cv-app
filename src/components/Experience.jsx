@@ -5,7 +5,12 @@ import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
 import ButtonTray from "./ButtonTray";
 
-function Experience({ exp, editing }) {
+function Experience({ exp, editing, handleEdit }) {
+
+  function callEditForm(e) {
+    handleEdit(e);
+  }
+
   return (
     <>
       <div className="title-button-tray">
@@ -14,7 +19,7 @@ function Experience({ exp, editing }) {
         </h4>
 
         <ButtonTray visible={editing}>
-          <button>Edit</button>
+          <button onClick={callEditForm}>Edit</button>
           <button>Delete</button>
         </ButtonTray>
       </div>
@@ -40,7 +45,7 @@ function ExpForm({ title, handleSubmit, handleFormCancel }) {
         <input placeholder="Accomplishment 2"></input>
         <input placeholder="Accomplishment 3"></input>
         <ButtonTray>
-          <button type="submit">Add</button>
+          <button type="submit">Save</button>
           <button type="button" onClick={handleFormCancel}>
             Cancel
           </button>
@@ -53,6 +58,7 @@ function ExpForm({ title, handleSubmit, handleFormCancel }) {
 export default function WorkExperience() {
   const [editing, setEditing] = useState(false);
   const [adding, setAdding] = useState(false);
+  const [editIndex, setEditIndex] =useState(null)
   const [expList, setExpList] = useState(experiences);
 
   function handleChange() {
@@ -68,18 +74,22 @@ export default function WorkExperience() {
     e.preventDefault();
     setAdding(false);
     setEditing(false);
+    setEditIndex(null);
   }
 
   function handleFormCancel() {
     setAdding(false);
     setEditing(true);
+    setEditIndex(null)
   }
 
   function addExperience() {}
 
   function delExperience() {}
 
-  function editExperience() {}
+  function editExperience(e, key) {
+    setEditIndex(key)
+  }
 
   return (
     <SectionCard editing={editing} onClick={handleChange}>
@@ -99,14 +109,27 @@ export default function WorkExperience() {
             handleFormCancel={handleFormCancel}
           />,
           document.body,
-        )}
+        )
+      }
+
+      {
+        editIndex && 
+        createPortal(
+          <ExpForm
+            title="Edit Experience"
+            handleSubmit={handleSubmit}
+            handleFormCancel={handleFormCancel}
+          />,
+          document.body,
+        )
+      }      
 
       {expList.map((exp) => (
         <Experience
           exp={exp}
           key={exp.key}
           editing={editing}
-          handleEdit={editExperience}
+          handleEdit={(e) => editExperience(e, exp.key)}
           handleDelete={delExperience}
         />
       ))}
