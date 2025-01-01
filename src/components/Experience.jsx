@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { experiences } from "../data";
+import extractFormData from "../utils/helpers";
 import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
 import ButtonTray from "./ButtonTray";
+
 
 function Experience({ exp, editing, handleEdit }) {
   function callEditForm(e) {
@@ -37,35 +39,44 @@ function ExpForm({ title, exp = null, handleFormSubmit, handleFormCancel }) {
       <form className="modal-content" onSubmit={handleFormSubmit}>
         <h3>{title}</h3>
         <input
+          name="title"
           placeholder="Job Title"
           defaultValue={exp ? exp.title : null}
         ></input>
         <input
+          name="employer"
           placeholder="Employer"
           defaultValue={exp ? exp.employer : null}
         ></input>
         <input
+          name="start"
           placeholder="Start Date"
           defaultValue={exp ? exp.start : null}
         ></input>
         <input
+          name="end"
           placeholder="End Date"
           defaultValue={exp ? exp.end : null}
         ></input>
         <input
+          name="acc-1"
           placeholder="Accomplishment 1"
           defaultValue={exp ? exp.accomplishments[0] : null}
         ></input>
         <input
+          name="acc-2"
           placeholder="Accomplishment 2"
           defaultValue={exp ? exp.accomplishments[1] : null}
         ></input>
         <input
+          name="acc-3"
           placeholder="Accomplishment 3"
           defaultValue={exp ? exp.accomplishments[2] : null}
         ></input>
         <ButtonTray>
-          <button type="submit" onClick={handleFormSubmit}>Save</button>
+          <button type="submit" onClick={handleFormSubmit}>
+            Save
+          </button>
           <button type="button" onClick={handleFormCancel}>
             Cancel
           </button>
@@ -103,11 +114,24 @@ export default function WorkExperience() {
     setEditIndex(null);
   }
 
-  function addExperience() {}
+  function addExperience(e) {
+    handleFormSubmit(e);
+    const form = e.target.form;
+    if (form) {
+      const data = extractFormData(form);
+      // TODO: call function to create new key, append entry then reorder list
+      // TODO: call function to update state
+      console.log(data);
+    }
+  }
 
-  function delExperience() {}
+  function delExperience(e) {
+    handleFormSubmit(e);
+  }
 
-  function editExperience() {}
+  function editExperience(e) {
+    handleFormSubmit(e);
+  }
 
   const entryFocused = expList.find((exp) => exp.key === editIndex);
 
@@ -125,7 +149,7 @@ export default function WorkExperience() {
         createPortal(
           <ExpForm
             title="Add Experience"
-            handleFormSubmit={handleFormSubmit}
+            handleFormSubmit={addExperience}
             handleFormCancel={handleFormCancel}
           />,
           document.body,
@@ -136,7 +160,7 @@ export default function WorkExperience() {
           <ExpForm
             title="Edit Experience"
             exp={entryFocused}
-            handleFormSubmit={handleFormSubmit}
+            handleFormSubmit={editExperience}
             handleFormCancel={handleFormCancel}
           />,
           document.body,

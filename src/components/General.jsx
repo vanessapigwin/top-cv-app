@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { general } from "../data";
+import extractFormData from "../utils/helpers";
 import "../styles/General.css";
 import SectionCard from "./SectionCard";
 
@@ -18,14 +19,11 @@ export default function GeneralSection() {
   function handleContent(e) {
     e.preventDefault();
     const form = e.target.form;
-    if (form) updateData(form);
+    if (form) {
+      const data = extractFormData(form);
+      setGeneralData(data);
+    }
     setEditing(!editing);
-  }
-
-  function updateData(form) {
-    const formData = new FormData(form);
-    const updatedData = Object.fromEntries(formData);
-    setGeneralData(updatedData);
   }
 
   function Content() {
@@ -40,10 +38,10 @@ export default function GeneralSection() {
       );
     return (
       <form id="general" className="general-input">
-        <input defaultValue={general.name} name="name"></input>
-        <input defaultValue={general.email} name="email"></input>
-        <input defaultValue={general.contactNo} name="contactNo"></input>
-        <input defaultValue={general.github} name="github"></input>
+        <input name="name" placeholder='Name' defaultValue={generalData.name}></input>
+        <input name="email" placeholder='E-mail' defaultValue={generalData.email}></input>
+        <input name="contactNo" placeholder='Contact Number' defaultValue={generalData.contactNo}></input>
+        <input name="github" placeholder='Website / GitHub' defaultValue={generalData.github}></input>
       </form>
     );
   }
