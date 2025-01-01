@@ -131,8 +131,13 @@ export default function WorkExperience() {
       const data = extractFormData(form);
       data.key = crypto.randomUUID();
       const newExp = createExp(data);
-      const updatedExpList = [newExp, ...expList];
-      setExpList(updatedExpList);
+
+      if (!newExp.title || !newExp.employer || !newExp.start || !newExp.end) {
+        alert("Title, employer, start and end dates required");
+      } else {
+        const updatedExpList = [newExp, ...expList];
+        setExpList(updatedExpList);
+      }
     }
   }
 
