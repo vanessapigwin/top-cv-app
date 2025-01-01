@@ -113,14 +113,26 @@ export default function WorkExperience() {
     setEditIndex(null);
   }
 
+  function createExp(data) {
+    const accKeys = ["acc-1", "acc-2", "acc-3"];
+    const accomplishments = [];
+    accKeys.forEach((key) => {
+      accomplishments.push(data[key]);
+      delete data[key];
+    });
+    data.accomplishments = accomplishments;
+    return data;
+  }
+
   function addExperience(e) {
     handleFormSubmit(e);
     const form = e.target.form;
     if (form) {
       const data = extractFormData(form);
-      // TODO: call function to create new key, append entry then reorder list
-      // TODO: call function to update state
-      console.log(data);
+      data.key = crypto.randomUUID();
+      const newExp = createExp(data);
+      const updatedExpList = [newExp, ...expList];
+      setExpList(updatedExpList);
     }
   }
 
