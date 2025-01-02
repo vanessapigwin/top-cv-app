@@ -74,7 +74,7 @@ function ExpForm({ title, exp = null, handleFormSubmit, handleFormCancel }) {
         ></input>
         <ButtonTray>
           <button type="submit" onClick={handleFormSubmit}>
-            Save
+            {exp? 'Update': 'Add'}
           </button>
           <button type="button" onClick={handleFormCancel}>
             Cancel
@@ -147,6 +147,22 @@ export default function WorkExperience() {
 
   function editExperience(e) {
     handleFormSubmit(e);
+    const form = e.target.form;
+    if (form) {
+      const data = extractFormData(form);
+      const newExp = createExp(data);
+
+      if (!newExp.title || !newExp.employer || !newExp.start || !newExp.end) {
+        alert("Title, employer, start and end dates required");
+      } else {
+        const updatedExpList = [];
+        expList.forEach(exp => {
+          exp.key === editIndex? updatedExpList.push(newExp): updatedExpList.push(exp)
+        })
+        setExpList(updatedExpList)
+      }
+      
+    }
   }
 
   const entryFocused = expList.find((exp) => exp.key === editIndex);
