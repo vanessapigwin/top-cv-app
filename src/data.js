@@ -1,11 +1,11 @@
-export const general = {
+const general = {
   name: "Vanessa Rica F. Tan Cardoso",
   email: "vanessa---------@gmail.com",
   contactNo: "+62920------",
   github: "github.com/vanessa------",
 };
 
-export const experiences = [
+const experiences = [
   {
     key: 2,
     title: "Software Engineer",
@@ -43,3 +43,20 @@ export const experiences = [
     ],
   },
 ];
+
+const education = [
+  {
+    key: 1,
+    degree: "M.S. Civil Engineering - Geotechnical",
+    school: "University of the Philippines",
+    yearGraduated: "2016",
+  },
+  {
+    key: 0,
+    degree: "B.S. Civil Engineering",
+    school: "University of Santo Tomas",
+    yearGraduated: "2008",
+  },
+];
+
+export { general, experiences, education };
