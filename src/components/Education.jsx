@@ -38,7 +38,11 @@ function EducForm({ title, data = null, handleFormSubmit, handleFormCancel }) {
         placeholder="University / School"
         defaultValue={data ? data.school : null}
       ></input>
-      <input name="yearGraduated" placeholder="Year Graduated" defaultValue={data ? data.yearGraduated : null}></input>
+      <input
+        name="yearGraduated"
+        placeholder="Year Graduated"
+        defaultValue={data ? data.yearGraduated : null}
+      ></input>
     </ModalForm>
   );
 }
@@ -77,10 +81,12 @@ export default function Education() {
 
   function handleEdit(e) {
     handleFormSubmit(e);
-    console.log(e);
   }
 
-  function handleDelete() {}
+  function handleDelete(e, key) {
+    const newEducList = educList.filter((ed) => ed.key !== key);
+    setEducList(newEducList);
+  }
 
   const entryFocused = educList.find((ed) => ed.key === selectedIndex);
 
@@ -117,7 +123,7 @@ export default function Education() {
             ed={ed}
             editing={editing}
             handleEdit={() => setSelectedIndex(ed.key)}
-            handleDelete={handleDelete}
+            handleDelete={(e) => handleDelete(e, ed.key)}
           />
         ))}
       </ul>

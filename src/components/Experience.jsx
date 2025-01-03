@@ -97,7 +97,6 @@ export default function WorkExperience() {
   function handleFormSubmit(e) {
     e.preventDefault();
     setAdding(false);
-    setEditing(false);
     setSelectedIndex(null);
   }
 
@@ -136,7 +135,6 @@ export default function WorkExperience() {
   }
 
   function delExperience(e, key) {
-    handleFormSubmit(e);
     const updatedExpList = expList.filter((exp) => exp.key !== key);
     setExpList(updatedExpList);
   }
@@ -147,6 +145,7 @@ export default function WorkExperience() {
     if (form) {
       const data = extractFormData(form);
       const newExp = createExp(data);
+      newExp.key = crypto.randomUUID();
 
       if (!newExp.title || !newExp.employer || !newExp.start || !newExp.end) {
         alert("Title, employer, start and end dates required");
@@ -157,8 +156,6 @@ export default function WorkExperience() {
             ? updatedExpList.push(newExp)
             : updatedExpList.push(exp);
         });
-
-        if (updatedExpList !== expList) setExpList(updatedExpList);
       }
     }
   }
