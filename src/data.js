@@ -39,7 +39,7 @@ const experiences = [
     accomplishments: [
       "Transform field data from Excel to technical reports",
       "Develop spreadsheets and tools for foundation and structural design",
-      "Liaise with clients and stakeholders from planning to construction",
+      "Coordinate with clients and stakeholders from planning to construction",
     ],
   },
 ];
