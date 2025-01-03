@@ -59,4 +59,20 @@ const education = [
   },
 ];
 
-export { general, experiences, education };
+const skills = [
+  {
+    key: 2,
+    content:
+      "Backend Development - Python (Flask, pytest, pandas), Azure Functions, MSSQL",
+  },
+  {
+    key: 1,
+    content: "Automation and Scraping - html, css, js, Selenium",
+  },
+  {
+    key: 0,
+    content: "CI / CD - git, GitHub Workflows, Linux, Docker",
+  },
+];
+
+export { general, experiences, education, skills };
