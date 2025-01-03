@@ -157,7 +157,7 @@ export default function WorkExperience() {
             ? updatedExpList.push(newExp)
             : updatedExpList.push(exp);
         });
-        setExpList(updatedExpList)
+        setExpList(updatedExpList);
         handleFormSubmit(e);
       }
     }

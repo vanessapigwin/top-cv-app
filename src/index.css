@@ -15,10 +15,6 @@
   width: clamp(600px, 100%, 1080px);
 }
 
-* {
-  border: solid 1px red;
-}
-
 a {
   font-weight: 500;
   color: #646cff;

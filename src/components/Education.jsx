@@ -3,6 +3,7 @@ import { education } from "../data";
 import ButtonTray from "./ButtonTray";
 import SectionCard from "./SectionCard";
 import ModalForm from "./Form";
+import extractFormData from "../utils/helpers";
 
 function EducationEntry({ ed, editing, handleEdit, handleDelete }) {
   return (
@@ -64,7 +65,6 @@ export default function Education() {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    setEditing(false);
     setIsAdding(false);
     setSelectedIndex(null);
   }
@@ -76,14 +76,44 @@ export default function Education() {
   }
 
   function handleAdd(e) {
-    handleFormSubmit(e);
+    const form = e.target;
+    if (form) {
+      const newEduc = extractFormData(form);
+      newEduc.key = crypto.randomUUID();
+
+      if (Object.values(newEduc).some((value) => value === "")) {
+        handleFormCancel(e);
+        alert("Degree, school and date graduated required");
+      } else {
+        setEducList([newEduc, ...educList]);
+        handleFormSubmit(e);
+      }
+    }
   }
 
   function handleEdit(e) {
-    handleFormSubmit(e);
+    const form = e.target;
+    if (form) {
+      const updatedEduc = extractFormData(form);
+      updatedEduc.key = crypto.randomUUID();
+
+      if (Object.values(updatedEduc).some((value) => value === "")) {
+        handleFormCancel(e);
+        alert("Degree, school and date graduated required");
+      } else {
+        const newList = [];
+        educList.forEach((ed) => {
+          ed.key === selectedIndex
+            ? newList.push(updatedEduc)
+            : newList.push(ed);
+        });
+        setEducList(newList);
+        handleFormSubmit(e);
+      }
+    }
   }
 
-  function handleDelete(e, key) {
+  function handleDelete(key) {
     const newEducList = educList.filter((ed) => ed.key !== key);
     setEducList(newEducList);
   }
@@ -123,7 +153,7 @@ export default function Education() {
             ed={ed}
             editing={editing}
             handleEdit={() => setSelectedIndex(ed.key)}
-            handleDelete={(e) => handleDelete(e, ed.key)}
+            handleDelete={() => handleDelete(ed.key)}
           />
         ))}
       </ul>
