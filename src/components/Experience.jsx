@@ -118,7 +118,6 @@ export default function WorkExperience() {
   }
 
   function addExperience(e) {
-    handleFormSubmit(e);
     const form = e.target;
     if (form) {
       const data = extractFormData(form);
@@ -126,21 +125,22 @@ export default function WorkExperience() {
       const newExp = createExp(data);
 
       if (!newExp.title || !newExp.employer || !newExp.start || !newExp.end) {
+        handleFormCancel(e);
         alert("Title, employer, start and end dates required");
       } else {
         const updatedExpList = [newExp, ...expList];
         setExpList(updatedExpList);
+        handleFormSubmit(e);
       }
     }
   }
 
-  function delExperience(e, key) {
+  function delExperience(key) {
     const updatedExpList = expList.filter((exp) => exp.key !== key);
     setExpList(updatedExpList);
   }
 
   function editExperience(e) {
-    handleFormSubmit(e);
     const form = e.target;
     if (form) {
       const data = extractFormData(form);
@@ -148,6 +148,7 @@ export default function WorkExperience() {
       newExp.key = crypto.randomUUID();
 
       if (!newExp.title || !newExp.employer || !newExp.start || !newExp.end) {
+        handleFormCancel(e);
         alert("Title, employer, start and end dates required");
       } else {
         const updatedExpList = [];
@@ -156,6 +157,8 @@ export default function WorkExperience() {
             ? updatedExpList.push(newExp)
             : updatedExpList.push(exp);
         });
+        setExpList(updatedExpList)
+        handleFormSubmit(e);
       }
     }
   }
@@ -195,7 +198,7 @@ export default function WorkExperience() {
           key={exp.key}
           editing={editing}
           handleEdit={() => setSelectedIndex(exp.key)}
-          handleDelete={(e) => delExperience(e, exp.key)}
+          handleDelete={() => delExperience(exp.key)}
         />
       ))}
     </SectionCard>
