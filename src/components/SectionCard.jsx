@@ -12,7 +12,7 @@ export default function SectionCard({
     <div className="section-card" style={style}>
       {showButton && (
         <button type="submit" form={form} onClick={onClick}>
-          {editing ? "Save" : "Edit"}
+          {editing ? "Cancel" : "Edit"}
         </button>
       )}
       {children}

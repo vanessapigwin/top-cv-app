@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import { experiences } from "../data";
 import extractFormData from "../utils/helpers";
-import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
 import ModalForm from "./Form";
 import ButtonTray from "./ButtonTray";
+import "../styles/Experience.css";
 
 function Experience({ exp, editing, handleEdit, handleDelete }) {
   function callEditForm(e) {
@@ -122,7 +121,6 @@ export default function WorkExperience() {
   function addExperience(e) {
     handleFormSubmit(e);
     const form = e.target;
-    console.log(e);
     if (form) {
       const data = extractFormData(form);
       data.key = crypto.randomUUID();
@@ -177,26 +175,22 @@ export default function WorkExperience() {
         </ButtonTray>
       </div>
 
-      {adding &&
-        createPortal(
-          <ExpForm
-            title="Add Experience"
-            handleFormSubmit={addExperience}
-            handleFormCancel={handleFormCancel}
-          />,
-          document.body,
-        )}
+      {adding && (
+        <ExpForm
+          title="Add Experience"
+          handleFormSubmit={addExperience}
+          handleFormCancel={handleFormCancel}
+        />
+      )}
 
-      {selectedIndex !== null &&
-        createPortal(
-          <ExpForm
-            title="Edit Experience"
-            exp={entryFocused}
-            handleFormSubmit={editExperience}
-            handleFormCancel={handleFormCancel}
-          />,
-          document.body,
-        )}
+      {selectedIndex !== null && (
+        <ExpForm
+          title="Edit Experience"
+          exp={entryFocused}
+          handleFormSubmit={editExperience}
+          handleFormCancel={handleFormCancel}
+        />
+      )}
 
       {expList.map((exp) => (
         <Experience
