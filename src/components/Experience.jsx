@@ -4,6 +4,7 @@ import { experiences } from "../data";
 import extractFormData from "../utils/helpers";
 import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
+import ModalForm from "./Form";
 import ButtonTray from "./ButtonTray";
 
 function Experience({ exp, editing, handleEdit, handleDelete }) {
@@ -34,54 +35,48 @@ function Experience({ exp, editing, handleEdit, handleDelete }) {
 
 function ExpForm({ title, exp = null, handleFormSubmit, handleFormCancel }) {
   return (
-    <div className="form-modal">
-      <form className="modal-content" onSubmit={handleFormSubmit}>
-        <h3>{title}</h3>
-        <input
-          name="title"
-          placeholder="Job Title"
-          defaultValue={exp ? exp.title : null}
-        ></input>
-        <input
-          name="employer"
-          placeholder="Employer"
-          defaultValue={exp ? exp.employer : null}
-        ></input>
-        <input
-          name="start"
-          placeholder="Start Date"
-          defaultValue={exp ? exp.start : null}
-        ></input>
-        <input
-          name="end"
-          placeholder="End Date"
-          defaultValue={exp ? exp.end : null}
-        ></input>
-        <input
-          name="acc-1"
-          placeholder="Accomplishment 1"
-          defaultValue={exp ? exp.accomplishments[0] : null}
-        ></input>
-        <input
-          name="acc-2"
-          placeholder="Accomplishment 2"
-          defaultValue={exp ? exp.accomplishments[1] : null}
-        ></input>
-        <input
-          name="acc-3"
-          placeholder="Accomplishment 3"
-          defaultValue={exp ? exp.accomplishments[2] : null}
-        ></input>
-        <ButtonTray>
-          <button type="submit" onClick={handleFormSubmit}>
-            {exp ? "Update" : "Add"}
-          </button>
-          <button type="button" onClick={handleFormCancel}>
-            Cancel
-          </button>
-        </ButtonTray>
-      </form>
-    </div>
+    <ModalForm
+      data={exp}
+      title={title}
+      handleFormSubmit={handleFormSubmit}
+      handleFormCancel={handleFormCancel}
+    >
+      <input
+        name="title"
+        placeholder="Job Title"
+        defaultValue={exp ? exp.title : null}
+      ></input>
+      <input
+        name="employer"
+        placeholder="Employer"
+        defaultValue={exp ? exp.employer : null}
+      ></input>
+      <input
+        name="start"
+        placeholder="Start Date"
+        defaultValue={exp ? exp.start : null}
+      ></input>
+      <input
+        name="end"
+        placeholder="End Date"
+        defaultValue={exp ? exp.end : null}
+      ></input>
+      <input
+        name="acc-1"
+        placeholder="Accomplishment 1"
+        defaultValue={exp ? exp.accomplishments[0] : null}
+      ></input>
+      <input
+        name="acc-2"
+        placeholder="Accomplishment 2"
+        defaultValue={exp ? exp.accomplishments[1] : null}
+      ></input>
+      <input
+        name="acc-3"
+        placeholder="Accomplishment 3"
+        defaultValue={exp ? exp.accomplishments[2] : null}
+      ></input>
+    </ModalForm>
   );
 }
 
@@ -96,7 +91,7 @@ export default function WorkExperience() {
     setAdding(false);
   }
 
-  function showForm(e) {
+  function showForm() {
     setAdding(true);
   }
 
@@ -126,7 +121,8 @@ export default function WorkExperience() {
 
   function addExperience(e) {
     handleFormSubmit(e);
-    const form = e.target.form;
+    const form = e.target;
+    console.log(e);
     if (form) {
       const data = extractFormData(form);
       data.key = crypto.randomUUID();
@@ -149,7 +145,7 @@ export default function WorkExperience() {
 
   function editExperience(e) {
     handleFormSubmit(e);
-    const form = e.target.form;
+    const form = e.target;
     if (form) {
       const data = extractFormData(form);
       const newExp = createExp(data);
@@ -163,7 +159,8 @@ export default function WorkExperience() {
             ? updatedExpList.push(newExp)
             : updatedExpList.push(exp);
         });
-        setExpList(updatedExpList);
+
+        if (updatedExpList !== expList) setExpList(updatedExpList);
       }
     }
   }
