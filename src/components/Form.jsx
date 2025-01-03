@@ -1,7 +1,7 @@
 import ButtonTray from "./ButtonTray";
 
 export default function ModalForm({
-  data,
+  data = null,
   title,
   handleFormSubmit,
   handleFormCancel,
