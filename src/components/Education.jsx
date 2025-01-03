@@ -2,24 +2,10 @@ import { useState } from "react";
 import { education } from "../data";
 import ButtonTray from "./ButtonTray";
 import SectionCard from "./SectionCard";
+import ListItem from "./ListItem";
 import ModalForm from "./Form";
 import extractFormData from "../utils/helpers";
 
-function EducationEntry({ ed, editing, handleEdit, handleDelete }) {
-  return (
-    <li>
-      <div>
-        <span>
-          {ed.degree}, {ed.school} ({ed.yearGraduated})
-        </span>
-        <ButtonTray visible={editing}>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
-        </ButtonTray>
-      </div>
-    </li>
-  );
-}
 
 function EducForm({ title, data = null, handleFormSubmit, handleFormCancel }) {
   return (
@@ -148,9 +134,9 @@ export default function Education() {
 
       <ul>
         {educList.map((ed) => (
-          <EducationEntry
+          <ListItem
             key={ed.key}
-            ed={ed}
+            title={`${ed.degree}, ${ed.school} (${ed.yearGraduated})`}
             editing={editing}
             handleEdit={() => setSelectedIndex(ed.key)}
             handleDelete={() => handleDelete(ed.key)}
