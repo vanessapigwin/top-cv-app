@@ -6,7 +6,7 @@ import "../styles/Experience.css";
 import SectionCard from "./SectionCard";
 import ButtonTray from "./ButtonTray";
 
-function Experience({ exp, editing, handleEdit }) {
+function Experience({ exp, editing, handleEdit, handleDelete }) {
   function callEditForm(e) {
     handleEdit(e);
   }
@@ -20,7 +20,7 @@ function Experience({ exp, editing, handleEdit }) {
 
         <ButtonTray visible={editing}>
           <button onClick={callEditForm}>Edit</button>
-          <button>Delete</button>
+          <button onClick={handleDelete}>Delete</button>
         </ButtonTray>
       </div>
       <ul>
@@ -74,7 +74,7 @@ function ExpForm({ title, exp = null, handleFormSubmit, handleFormCancel }) {
         ></input>
         <ButtonTray>
           <button type="submit" onClick={handleFormSubmit}>
-            {exp? 'Update': 'Add'}
+            {exp ? "Update" : "Add"}
           </button>
           <button type="button" onClick={handleFormCancel}>
             Cancel
@@ -88,7 +88,7 @@ function ExpForm({ title, exp = null, handleFormSubmit, handleFormCancel }) {
 export default function WorkExperience() {
   const [editing, setEditing] = useState(false);
   const [adding, setAdding] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [expList, setExpList] = useState(experiences);
 
   function handleChange() {
@@ -104,13 +104,13 @@ export default function WorkExperience() {
     e.preventDefault();
     setAdding(false);
     setEditing(false);
-    setEditIndex(null);
+    setSelectedIndex(null);
   }
 
   function handleFormCancel() {
     setAdding(false);
     setEditing(true);
-    setEditIndex(null);
+    setSelectedIndex(null);
   }
 
   function createExp(data) {
@@ -141,8 +141,10 @@ export default function WorkExperience() {
     }
   }
 
-  function delExperience(e) {
+  function delExperience(e, key) {
     handleFormSubmit(e);
+    const updatedExpList = expList.filter((exp) => exp.key !== key);
+    setExpList(updatedExpList);
   }
 
   function editExperience(e) {
@@ -156,16 +158,17 @@ export default function WorkExperience() {
         alert("Title, employer, start and end dates required");
       } else {
         const updatedExpList = [];
-        expList.forEach(exp => {
-          exp.key === editIndex? updatedExpList.push(newExp): updatedExpList.push(exp)
-        })
-        setExpList(updatedExpList)
+        expList.forEach((exp) => {
+          exp.key === selectedIndex
+            ? updatedExpList.push(newExp)
+            : updatedExpList.push(exp);
+        });
+        setExpList(updatedExpList);
       }
-      
     }
   }
 
-  const entryFocused = expList.find((exp) => exp.key === editIndex);
+  const entryFocused = expList.find((exp) => exp.key === selectedIndex);
 
   return (
     <SectionCard editing={editing} onClick={handleChange}>
@@ -187,7 +190,7 @@ export default function WorkExperience() {
           document.body,
         )}
 
-      {editIndex !== null &&
+      {selectedIndex !== null &&
         createPortal(
           <ExpForm
             title="Edit Experience"
@@ -203,8 +206,8 @@ export default function WorkExperience() {
           exp={exp}
           key={exp.key}
           editing={editing}
-          handleEdit={() => setEditIndex(exp.key)}
-          handleDelete={delExperience}
+          handleEdit={() => setSelectedIndex(exp.key)}
+          handleDelete={(e) => delExperience(e, exp.key)}
         />
       ))}
     </SectionCard>
