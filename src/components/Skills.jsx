@@ -4,6 +4,7 @@ import SectionCard from "./SectionCard";
 import ButtonTray from "./ButtonTray";
 import ListItem from "./ListItem";
 import ModalForm from "./Form";
+import extractFormData from "../utils/helpers";
 
 export default function Skills() {
   const [editing, setEditing] = useState(false);
@@ -11,14 +12,29 @@ export default function Skills() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [skillList, setSkillList] = useState(skills);
 
-  function handleFormCancel() {}
+  function handleFormCancel() {
+    setEditing(true);
+    setIsAdding(false);
+    setSelectedIndex(null);
+  }
 
   function handleFormSubmit(e) {
     e.preventDefault();
+    setIsAdding(false);
+    setSelectedIndex(null);
   }
 
   function handleAdd(e) {
-    handleFormSubmit(e)
+    const data = extractFormData(e.target);
+    if (data.content) {
+      data.key = crypto.randomUUID();
+      const newList = [data, ...skillList];
+      setSkillList(newList);
+      handleFormSubmit(e);
+    } else {
+      alert("Please add a skill");
+      handleFormCancel(e);
+    }
   }
 
   function handleEdit() {}
@@ -41,13 +57,19 @@ export default function Skills() {
           handleFormSubmit={handleAdd}
           handleFormCancel={handleFormCancel}
         >
-          <input placeholder="Content"></input>
+          <input placeholder="Content" name="content"></input>
         </ModalForm>
       )}
 
       <ul>
         {skillList.map((skill) => (
-          <ListItem key={skill.key} title={skill.content} editing={editing} />
+          <ListItem
+            key={skill.key}
+            title={skill.content}
+            editing={editing}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
         ))}
       </ul>
     </SectionCard>
