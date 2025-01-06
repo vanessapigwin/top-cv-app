@@ -39,7 +39,10 @@ export default function Skills() {
 
   function handleEdit() {}
 
-  function handleDelete() {}
+  function handleDelete(key) {
+    const newList = skillList.filter((skill) => skill.key != key);
+    setSkillList(newList);
+  }
 
   return (
     <SectionCard editing={editing} onClick={() => setEditing(!editing)}>
@@ -68,7 +71,7 @@ export default function Skills() {
             title={skill.content}
             editing={editing}
             handleEdit={handleEdit}
-            handleDelete={handleDelete}
+            handleDelete={() => handleDelete(skill.key)}
           />
         ))}
       </ul>
