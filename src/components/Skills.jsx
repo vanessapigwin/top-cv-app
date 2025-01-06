@@ -37,12 +37,28 @@ export default function Skills() {
     }
   }
 
-  function handleEdit() {}
+  function handleEdit(e) {
+    const data = extractFormData(e.target);
+    if (data.content) {
+      data.key = crypto.randomUUID();
+      const newList = [];
+      skillList.forEach((skill) => {
+        skill.key === selectedIndex ? newList.push(data) : newList.push(skill);
+      });
+      setSkillList(newList);
+      handleFormSubmit(e);
+    } else {
+      alert("Skill should not be empty");
+      handleFormCancel(e);
+    }
+  }
 
   function handleDelete(key) {
-    const newList = skillList.filter((skill) => skill.key != key);
+    const newList = skillList.filter((skill) => skill.key !== key);
     setSkillList(newList);
   }
+
+  const editingEntry = skillList.find((skill) => skill.key === selectedIndex);
 
   return (
     <SectionCard editing={editing} onClick={() => setEditing(!editing)}>
@@ -64,13 +80,28 @@ export default function Skills() {
         </ModalForm>
       )}
 
+      {selectedIndex !== null && (
+        <ModalForm
+          data={editingEntry}
+          title="Edit Skill"
+          handleFormSubmit={handleEdit}
+          handleFormCancel={handleFormCancel}
+        >
+          <input
+            placeholder="Content"
+            name="content"
+            defaultValue={editingEntry.content}
+          ></input>
+        </ModalForm>
+      )}
+
       <ul>
         {skillList.map((skill) => (
           <ListItem
             key={skill.key}
             title={skill.content}
             editing={editing}
-            handleEdit={handleEdit}
+            handleEdit={() => setSelectedIndex(skill.key)}
             handleDelete={() => handleDelete(skill.key)}
           />
         ))}
